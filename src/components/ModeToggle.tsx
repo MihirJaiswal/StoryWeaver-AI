@@ -6,13 +6,24 @@ export function ModeToggle() {
   const [isNight, setIsNight] = useState(false);
   const [hasMounted, setHasMounted] = useState(false); // Track mounting
 
+  // Check for dark mode preference on mount (CSR)
   useEffect(() => {
-    setHasMounted(true); 
+    setHasMounted(true);
+    const savedMode = localStorage.getItem("theme");
+    if (savedMode) {
+      setIsNight(savedMode === "dark");
+    } else {
+      // Set default mode based on user's preference
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setIsNight(prefersDark);
+    }
   }, []);
 
   useEffect(() => {
     if (hasMounted) {
       document.body.classList.toggle("dark", isNight);
+      // Store the theme in localStorage so it persists on reload
+      localStorage.setItem("theme", isNight ? "dark" : "light");
     }
   }, [isNight, hasMounted]);
 
@@ -29,24 +40,18 @@ export function ModeToggle() {
         />
         {/* Sun */}
         <div
-          className={`absolute top-1 left-2 w-4 h-4 bg-yellow-300 border border-gray-700 rounded-full shadow-lg transform transition-all ${
-            isNight ? "scale-0 translate-x-10" : "scale-100"
-          }`}
+          className={`absolute top-1 left-2 w-4 h-4 bg-yellow-300 border border-gray-700 rounded-full shadow-lg transform transition-all ${isNight ? "scale-0 translate-x-10" : "scale-100"}`}
         ></div>
         {/* Moon */}
         <div    
-          className={`absolute top-1 right-2 w-4 h-4 bg-white rounded-full shadow-lg transform transition-all ${
-            isNight ? "scale-100" : "scale-0 -translate-x-10"
-          }`}
+          className={`absolute top-1 right-2 w-4 h-4 bg-white rounded-full shadow-lg transform transition-all ${isNight ? "scale-100" : "scale-0 -translate-x-10"}`}
         ></div>
         {/* Clouds */}
         {!isNight &&
           Array.from({ length: 2 }).map((_, i) => (
             <div
               key={i}
-              className={`absolute right-4 top-2 bg-white rounded-full shadow-md transition-all transform ${
-                isNight ? "opacity-0 translate-x-10" : "opacity-100 scale-100"
-              }`}
+              className={`absolute right-4 top-2 bg-white rounded-full shadow-md transition-all transform ${isNight ? "opacity-0 translate-x-10" : "opacity-100 scale-100"}`}
               style={{
                 width: `${[16, 16][i]}px`,
                 height: `${[8, 8][i]}px`,
@@ -58,21 +63,19 @@ export function ModeToggle() {
           ))}
         {/* Stars */}
         {isNight &&
-  Array.from({ length: 5 }).map((_, i) => (
-    <div
-      key={i}
-      className={`absolute bg-white rounded-full transition-all transform ${
-        isNight ? "opacity-100 scale-150" : "opacity-0 scale-0"
-      }`}
-      style={{
-        width: `${[3, 3, 3, 2, 2][i]}px`,
-        height: `${[3, 3, 3, 2, 2][i]}px`,
-        top: `${[4, 12, 12, 20, 6][i]}px`,
-        left: `${[20, 10, 20, 20, 15][i]}px`,
-        animation: `twinkle ${1.5 + i * 0.3}s infinite`,
-      }}
-    ></div>
-  ))}
+          Array.from({ length: 5 }).map((_, i) => (
+            <div
+              key={i}
+              className={`absolute bg-white rounded-full transition-all transform ${isNight ? "opacity-100 scale-150" : "opacity-0 scale-0"}`}
+              style={{
+                width: `${[3, 3, 3, 2, 2][i]}px`,
+                height: `${[3, 3, 3, 2, 2][i]}px`,
+                top: `${[4, 12, 12, 20, 6][i]}px`,
+                left: `${[20, 10, 20, 20, 15][i]}px`,
+                animation: `twinkle ${1.5 + i * 0.3}s infinite`,
+              }}
+            ></div>
+          ))}
       </label>
     </div>
   );
