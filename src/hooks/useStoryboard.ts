@@ -134,7 +134,7 @@ export function useStoryboard(): StoryboardHook {
 
         Plot:
         ${plot}
-      `.trim();
+      `.trim(); 
 
       const response = await fetch(
         'https://api-inference.huggingface.co/models/Qwen/QwQ-32B-Preview',
