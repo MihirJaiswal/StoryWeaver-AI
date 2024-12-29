@@ -1,4 +1,3 @@
-// hooks/useStoryboard.ts
 import { useState } from "react";
 import { Scene, StoryboardHook } from "@/types";
 
@@ -17,7 +16,7 @@ export function useStoryboard(): StoryboardHook {
         "https://api-inference.huggingface.co/models/stable-diffusion-v1-5/stable-diffusion-v1-5",
         {
           headers: {
-            Authorization: "Bearer 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",
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUGGINGFACE_TOKEN}`,
             "Content-Type": "application/json",
           },
           method: "POST",
@@ -78,7 +77,8 @@ export function useStoryboard(): StoryboardHook {
         return matches.map(match => ({
           summary: match[2]?.trim().replace(/\n+/g, ' ') || '',
           dialogue: match[3]?.trim().replace(/\n+/g, ' ') || '',
-          imageStatus: 'loading'
+          imageStatus: 'loading',
+          imageUrl: ''
         }));
       }
     }
@@ -86,31 +86,20 @@ export function useStoryboard(): StoryboardHook {
     throw new Error('Could not parse scenes from the response text');
   };
 
-  const generateImagesSequentially = async (parsedScenes: Omit<Scene, 'imageUrl' | 'imageStatus'>[]) => {
-    const scenesWithImages: Scene[] = [];
-    
-    for (const scene of parsedScenes) {
+  const generateImagesSequentially = async (parsedScenes: Scene[]) => {
+    for (let i = 0; i < parsedScenes.length; i++) {
       try {
-        const imageUrl = await generateImage(scene.summary);
-        scenesWithImages.push({
-          ...scene,
-          imageUrl,
-          imageStatus: 'success'
-        });
-        
-        setScenes([...scenesWithImages]);
+        const imageUrl = await generateImage(parsedScenes[i].summary);
+        setScenes(prev => prev.map((scene, index) => 
+          index === i ? { ...scene, imageUrl, imageStatus: 'success' } : scene
+        ));
         await delay(1000);
       } catch (error) {
-        scenesWithImages.push({
-          ...scene,
-          imageUrl: '',
-          imageStatus: 'error'
-        });
-        setScenes([...scenesWithImages]);
+        setScenes(prev => prev.map((scene, index) => 
+          index === i ? { ...scene, imageStatus: 'error' } : scene
+        ));
       }
     }
-    
-    return scenesWithImages;
   };
 
   const segmentScenes = async (plot: string): Promise<void> => {
@@ -142,7 +131,7 @@ export function useStoryboard(): StoryboardHook {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer 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',
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUGGINGFACE_TOKEN}`
           },
           body: JSON.stringify({
             inputs: prompt,
@@ -175,7 +164,11 @@ export function useStoryboard(): StoryboardHook {
         throw new Error('No scenes were found in the generated text');
       }
 
-      await generateImagesSequentially(parsedScenes);
+      // Set scenes immediately with loading image status
+      setScenes(parsedScenes);
+
+      // Generate images asynchronously
+      generateImagesSequentially(parsedScenes);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
       console.error('Scene segmentation error:', err);
@@ -188,3 +181,4 @@ export function useStoryboard(): StoryboardHook {
 
   return { scenes, segmentScenes, error, isLoading, retryImage };
 }
+

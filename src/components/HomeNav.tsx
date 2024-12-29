@@ -26,8 +26,8 @@ function HomeNav() {
               key={item.label}
               href={item.route}
               onClick={handleClick}
-              className={`block relative font-code text-2xl uppercase text-n-1 transition-colors text-white hover:text-color-1 ${
-                item.route === pathname ? 'lg:hidden' : ''
+              className={`block relative font-code text-2xl uppercase text-n-1 transition-colors text-purple-500  hover:text-color-1 ${
+                item.route === pathname ? 'text-pink-700' : 'text-purple-500 '
               } px-6 py-6 md:py-8 lg:py-4 lg:-mr-0.25 lg:text-xs lg:font-semibold ${
                 item.route === pathname
                   ? 'z-2 lg:text-n-1'
@@ -54,15 +54,15 @@ function HomeNav() {
       <div
         className={`${
           openNavigation ? 'block' : 'hidden'
-        } fixed top-[5rem] left-0 right-0 bg-black text-white flex flex-col items-center py-8 space-y-6`}
+        } fixed top-[5rem] left-0 right-0 bg-black flex flex-col items-center py-8 space-y-6`}
       >
         {navigation.map((item) => (
           <a
             key={item.label}
             href={item.route}
             onClick={handleClick}
-            className={`block font-code text-xl uppercase transition-colors text-white hover:text-color-1 ${
-              item.route === pathname ? 'text-color-1' : ''
+            className={`block font-code text-xl uppercase transition-color  ${
+              item.route === pathname ? 'text-red-500' : 'text-black'
             }`}
           >
             {item.title}

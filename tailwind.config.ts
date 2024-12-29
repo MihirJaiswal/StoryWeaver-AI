@@ -8,10 +8,33 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+	patterns: {
+        opacities: {
+            100: "1",
+            80: ".80",
+            60: ".60",
+            40: ".40",
+            20: ".20",
+            10: ".10",
+            5: ".05",
+        },
+        sizes: {
+            1: "0.25rem",
+            2: "0.5rem",
+            4: "1rem",
+            6: "1.5rem",
+            8: "2rem",
+            16: "4rem",
+            20: "5rem",
+            24: "6rem",
+            32: "8rem",
+        }
+    },
   	extend: {
 		backgroundImage: {
-			img1: 'linear-gradient(to bottom, #fde5f3, #f8d8f1, #efccf2, #e3c1f5, #d1b7f9);',
+			img1: 'linear-gradient(to bottom, #fde5f3, #fedaf2, #fdcef2, #fbc3f4, #f7b9f7, #f3b6f9, #efb2fb, #ebaffd, #e8b1fd, #e6b3fd, #e3b4fd, #e1b6fd);',
 			img2: 'linear-gradient(to bottom, #22223b, #4a3f5c, #6f4f77, #9e6a9a, #d08ab5);',
+			img3: 'linear-gradient(to bottom, #22223b, #4a3f5c, #6f4f77, #9e6a9a);'
 		},
   		colors: {
   			background: 'hsl(var(--background))',
@@ -62,5 +85,7 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+  plugins: ['tailwindcss-bg-patterns'],
+} 
+
+

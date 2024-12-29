@@ -1,57 +1,45 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
+import React, { useEffect, useState } from "react";
 
 export function ModeToggle() {
-  const [isNight, setIsNight] = useState(false);
-  const [hasMounted, setHasMounted] = useState(false); // Track mounting
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  // Check for dark mode preference on mount (CSR)
+  // Ensure the component only renders after the client-side hydration
   useEffect(() => {
-    setHasMounted(true);
-    const savedMode = localStorage.getItem("theme");
-    if (savedMode) {
-      setIsNight(savedMode === "dark");
-    } else {
-      // Set default mode based on user's preference
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setIsNight(prefersDark);
-    }
+    setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (hasMounted) {
-      document.body.classList.toggle("dark", isNight);
-      // Store the theme in localStorage so it persists on reload
-      localStorage.setItem("theme", isNight ? "dark" : "light");
-    }
-  }, [isNight, hasMounted]);
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
 
-  if (!hasMounted) return null; // Avoid rendering until after mounting
+  if (!mounted) return null; // Prevent rendering before mount
 
   return (
     <div className="flex items-center justify-center">
-      <label className="relative w-16 h-8 bg-gradient-to-r from-blue-200 to-pink-200 dark:to-purple-600 rounded-full border border-white shadow-lg cursor-pointer dark:bg-gray-700 transition-all">
-        <input
-          type="checkbox"
-          className="hidden"
-          checked={isNight}
-          onChange={() => setIsNight(!isNight)}
-        />
+      <button
+        onClick={toggleTheme}
+        className="relative w-16 h-8 bg-gradient-to-r from-blue-200 dark:from-black to-pink-200 dark:to-purple-900 rounded-full border border-white shadow-lg cursor-pointer dark:bg-gray-700 transition-all"
+      >
         {/* Sun */}
         <div
-          className={`absolute top-1 left-2 w-4 h-4 bg-yellow-300 border border-gray-700 rounded-full shadow-lg transform transition-all ${isNight ? "scale-0 translate-x-10" : "scale-100"}`}
+          className={`absolute top-1 left-2 w-4 h-4 bg-yellow-300 border border-gray-700 rounded-full shadow-lg transform transition-all ${theme === "dark" ? "scale-0 translate-x-10" : "scale-100"}`}
         ></div>
+
         {/* Moon */}
-        <div    
-          className={`absolute top-1 right-2 w-4 h-4 bg-white rounded-full shadow-lg transform transition-all ${isNight ? "scale-100" : "scale-0 -translate-x-10"}`}
+        <div
+          className={`absolute top-1 right-2 w-4 h-4 bg-white rounded-full shadow-lg transform transition-all ${theme === "dark" ? "scale-100" : "scale-0 -translate-x-10"}`}
         ></div>
+
         {/* Clouds */}
-        {!isNight &&
+        {theme === "light" &&
           Array.from({ length: 2 }).map((_, i) => (
             <div
               key={i}
-              className={`absolute right-4 top-2 bg-white rounded-full shadow-md transition-all transform ${isNight ? "opacity-0 translate-x-10" : "opacity-100 scale-100"}`}
+              className={`absolute right-4 top-2 bg-white rounded-full shadow-md transition-all transform`}
               style={{
                 width: `${[16, 16][i]}px`,
                 height: `${[8, 8][i]}px`,
@@ -61,12 +49,13 @@ export function ModeToggle() {
               }}
             ></div>
           ))}
+
         {/* Stars */}
-        {isNight &&
+        {theme === "dark" &&
           Array.from({ length: 5 }).map((_, i) => (
             <div
               key={i}
-              className={`absolute bg-white rounded-full transition-all transform ${isNight ? "opacity-100 scale-150" : "opacity-0 scale-0"}`}
+              className={`absolute bg-white rounded-full transition-all transform ${theme === "dark" ? "opacity-100 scale-150" : "opacity-0 scale-0"}`}
               style={{
                 width: `${[3, 3, 3, 2, 2][i]}px`,
                 height: `${[3, 3, 3, 2, 2][i]}px`,
@@ -76,7 +65,7 @@ export function ModeToggle() {
               }}
             ></div>
           ))}
-      </label>
+      </button>
     </div>
   );
 }
