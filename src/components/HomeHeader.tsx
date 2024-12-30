@@ -32,7 +32,7 @@ const HomeHeader = () => {
         <div className="hidden lg:flex space-x-8 items-center">
           <HomeNav />
         </div>
-
+ 
         {/* Mobile Navigation */}
         <div className='flex lg:hidden gap-5 items-center'>
           <HomeMobileNav />
