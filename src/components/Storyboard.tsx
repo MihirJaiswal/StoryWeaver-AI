@@ -37,8 +37,8 @@ Image URL: ${scene.imageUrl}
   
 
   return (
-    <div className='min-h-screen mt-20'>
-      <div className="max-w-6xl mx-auto p-6 space-y-8 transition-colors duration-300 ">
+    <div className='min-h-screen pt-20'>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 transition-colors duration-300 ">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -68,7 +68,7 @@ Image URL: ${scene.imageUrl}
               value={plot}
               onChange={(e) => setPlot(e.target.value)}
               placeholder="Once upon a time in a galaxy far, far away..."
-              className="min-h-[120px] text-lg dark:bg-gray-700 dark:text-gray-100"
+              className="min-h-[200px] text-lg dark:bg-gray-700 dark:text-gray-100"
               disabled={isLoading}
             />
           </div>
@@ -147,71 +147,101 @@ Image URL: ${scene.imageUrl}
               >
                 <Button
                   onClick={handleDownload}
-                  className="flex items-center space-x-2 bg-green-500 hover:bg-green-600 text-white dark:bg-green-600 dark:hover:bg-green-700"
+                  className="flex items-center space-x-2 bg-gradient-to-r from-pink-700 to-purple-700 hover:from-pink-800 hover:to-purple-800 text-white"
                 >
                   <Download className="h-5 w-5" />
                   <span>Download Storyboard</span>
                 </Button>
               </motion.div>
               <motion.div
-                className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                className="flex flex-wrap items-center justify-center gap-8"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
                 {scenes.map((scene, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                  >
-                    <Card className="border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white/80 dark:bg-gray-900/90 backdrop-blur-sm">
-                      <CardHeader className="bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900/50 dark:to-blue-900/50">
-                        <CardTitle className="text-xl font-bold text-gray-800 dark:text-gray-100">Scene {index + 1}</CardTitle>
-                      </CardHeader>
-                      <CardContent className="p-6">
-                        {/* Image Handling */}
-                        <div className="relative w-full h-48 mb-4 bg-gray-100 dark:bg-gray-900 rounded-lg overflow-hidden">
-                          {scene.imageStatus === 'loading' && (
-                            <div className="absolute inset-0 flex flex-col items-center justify-center">
-                              <Loader2 className="h-8 w-8 animate-spin text-blue-600 dark:text-blue-400 mb-2" />
-                              <p className="text-sm text-gray-500 dark:text-gray-400">Generating image...</p>
-                            </div>
-                          )}
-                          {scene.imageStatus === 'error' && (
-                            <div className="absolute inset-0 flex flex-col items-center justify-center">
-                              <ImageOff className="h-8 w-8 text-gray-400 dark:text-gray-500 mb-2" />
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => retryImage(index)}
-                                className="flex items-center gap-2 dark:bg-gray-600 dark:text-gray-200"
-                              >
-                                <RefreshCcw className="h-4 w-4" />
-                                Retry
-                              </Button>
-                            </div>
-                          )}
-                          {scene.imageStatus === 'success' && scene.imageUrl && (
-                            <img
-                              src={scene.imageUrl}
-                              alt={`Scene ${index + 1}`}
-                              className="w-full h-48 object-cover rounded-lg"
-                            />
-                          )}
-                        </div>
-
-                        {/* Text Content */}
-                        <div className="h-96 overflow-auto">
-                          <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Summary:</h4>
-                          <p className="mb-4 text-gray-700 dark:text-gray-300 italic">{scene.summary}</p>
-                          <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Dialogue:</h4>
-                          <p className="text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-700/50 p-3 rounded-md">{scene.dialogue}</p>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
+                 <motion.div
+                 key={index}
+                 initial={{ opacity: 0, y: 20 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ duration: 0.3, delay: index * 0.1 }}
+               >
+                 <Card className="border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white dark:bg-gray-800 overflow-hidden h-full rounded-lg">
+                   <CardHeader className="bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900 dark:to-blue-900 p-4 rounded-t-lg">
+                     <CardTitle className="text-xl font-bold text-gray-800 dark:text-gray-100">Scene {index + 1}</CardTitle>
+                   </CardHeader>
+                   <CardContent className="p-6">
+                     <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+                       
+                       {/* Image Handling */}
+                       <div className="relative w-64 h-64 mb-4 bg-gray-100 dark:bg-gray-700 rounded-md overflow-hidden shadow-lg">
+                         {scene.imageStatus === 'loading' && (
+                           <div className="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-75 dark:bg-gray-900 dark:bg-opacity-50">
+                             <Loader2 className="h-8 w-8 animate-spin text-blue-600 dark:text-blue-400 mb-2" />
+                             <p className="text-sm text-gray-500 dark:text-gray-400">Generating image...</p>
+                           </div>
+                         )}
+                         {scene.imageStatus === 'error' && (
+                           <div className="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-75 dark:bg-gray-900 dark:bg-opacity-50">
+                             <ImageOff className="h-8 w-8 text-gray-400 dark:text-gray-500 mb-2" />
+                             <Button
+                               variant="outline"
+                               size="sm"
+                               onClick={() => retryImage(index)}
+                               className="flex items-center gap-2 dark:bg-gray-600 dark:text-gray-200 border-2 border-gray-400 dark:border-gray-600 rounded-md py-2 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-300"
+                             >
+                               <RefreshCcw className="h-4 w-4" />
+                               Retry
+                             </Button>
+                           </div>
+                         )}
+                         {scene.imageStatus === 'success' && scene.imageUrl && (
+                           <img
+                             src={scene.imageUrl}
+                             alt={`Scene ${index + 1}`}
+                             className="w-full h-full object-center"
+                           />
+                         )}
+                       </div>
+               
+                       {/* Text Content */}
+                       <div className="space-y-6 flex-1">
+                         <div>
+                           <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">Summary:</h4>
+                           <p className="text-gray-700 dark:text-gray-300 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-md shadow-md">{scene.summary}</p>
+                         </div>
+               
+                         <div>
+                           <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3 text-lg">Dialogue:</h4>
+                           <div className="space-y-4 md:max-h-64 overflow-y-auto p-4 bg-gray-50 dark:bg-gray-800/60 rounded-lg shadow-inner w-full">
+                             {scene.dialogue.split('\n').map((line, i) => {
+                               const [speaker, ...speech] = line.split(':');
+                               return (
+                                 <div>
+                                  <div
+                                   key={i}
+                                   className={`md:flex items-start gap-3 p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-sm transition-transform hidden transform  ${
+                                     i % 2 === 0
+                                       ? 'bg-gradient-to-b from-pink-50 to-pink-100 dark:from-gray-900 dark:to-gray-950 dark:text-white'
+                                       : 'bg-gradient-to-r from-green-100 to-green-200 dark:from-green-900 dark:to-green-800'
+                                   }`}
+                                 >
+                                   <span className="font-semibold text-pink-700 dark:text-purple-400 flex-shrink-0">{speaker}:</span>
+                                   <span className="text-gray-950 dark:text-white leading-relaxed">{speech.join(':').trim()}</span>
+                                 </div>
+                                 <span className="font-semibold text-pink-700 dark:text-purple-400 flex-shrink-0 md:hidden">{speaker}: </span>
+                                 <span className="text-gray-950 dark:text-white leading-relaxed md:hidden">{speech.join(':').trim()}</span>
+                                 </div>
+                               );
+                             })}
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   </CardContent>
+                 </Card>
+               </motion.div>
+               
                 ))}
               </motion.div>
             </>
