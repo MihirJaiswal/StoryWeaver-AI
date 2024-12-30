@@ -37,7 +37,6 @@ export function useStoryboard(): StoryboardHook {
       const blob = await response.blob();
       return URL.createObjectURL(blob);
     } catch (error) {
-      console.error("Image generation error:", error);
       throw error;
     }
   };
@@ -62,7 +61,6 @@ export function useStoryboard(): StoryboardHook {
     } catch (err) {
       console.error("Error retrying image:", err);
       const errorMessage = err instanceof Error ? err.message : "Unknown error";
-      setError(errorMessage)
       setScenes(prev =>
         prev.map((scene, i) =>
           i === index ? { ...scene, imageStatus: "error" } : scene
