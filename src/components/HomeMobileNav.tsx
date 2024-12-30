@@ -11,9 +11,9 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { navigation } from '../../constant/index'
-import Hamburger from '../../public/hamburger.svg'
-import { DialogTitle } from '@radix-ui/react-dialog' // Import DialogTitle
+import { DialogTitle } from '@radix-ui/react-dialog'
 import { MenuIcon } from 'lucide-react'
+import logo from '../../public/logo.png'
 
 function HomeMobileNav() {
     const pathname = usePathname();
@@ -26,21 +26,18 @@ function HomeMobileNav() {
             <MenuIcon className='w-8 h-8 text-pink-700 dark:text-white' />
           </SheetTrigger>
           <SheetContent side='right' className='bg-white dark:bg-black bg-clip-padding backdrop-filter backdrop-blur-sm border-gray-700'>
-            
-            {/* Add DialogTitle here */}
-            <DialogTitle className="sr-only">Menu</DialogTitle> {/* Visually hidden title for accessibility */}
-            
+            <DialogTitle className="sr-only">Menu</DialogTitle> 
             <Link href='/' className='flex items-center gap-1'>
-              {/*  <Image
+               <Image
                   src={logo}
-                  width={42}
-                  height={42}
                   alt='logo'
-                  className='max-sm:size-10'
-              /> */}
+                  className='w-12'
+                  quality={100}
+                  loading='lazy'
+                  placeholder='blur'
+              />
               <p className='text-[21px] font-bold  text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-pink-700 px-2 mt-1'>StoryWeaver AI</p>
             </Link>
-            
             <div className='flex h-[calc(100vh-72px)] flex-col justify-between overflow-y-auto'>
               <SheetClose asChild>
                 <section className='flex h-full flex-col gap-6 pt-16 text-black dark:text-white'>

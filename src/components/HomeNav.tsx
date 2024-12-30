@@ -29,11 +29,7 @@ function HomeNav() {
                 href={item.route}
                 onClick={handleClick}
                 className={`block relative font-code text-2xl uppercase text-n-1 transition-colors hover:text-pink-700 ${
-                  isActive ? 'text-pink-700' : 'text-purple-500'
-                } px-6 py-6 md:py-8 lg:py-4 lg:-mr-0.25 lg:text-xs lg:font-semibold ${
-                  isActive ? 'z-2 lg:text-n-1' : 'lg:text-n-1/50'
-                } lg:leading-5 lg:hover:text-n-1 xl:px-12`}
-              >
+                  isActive ? 'text-pink-700' : 'text-purple-500'} px-6 py-6 md:py-8 lg:py-4 lg:-mr-0.25 lg:text-xs lg:font-semibold ${isActive ? 'z-2 lg:text-n-1' : 'lg:text-n-1/50'} lg:leading-5 lg:hover:text-n-1 xl:px-12`}>
                 {item.title}
               </a>
             );
