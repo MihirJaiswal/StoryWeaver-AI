@@ -10,31 +10,57 @@ import SparklesText from "./ui/sparkles-text";
 
 export default function Landing() {
   const [plotInput, setPlotInput] = useState("");
-  const [hasMounted, setHasMounted] = useState(false); // Ensure the effect runs only after client mount
+  const [hasMounted, setHasMounted] = useState(false); 
+
+  const lines = [
+    "Once upon a time in a galaxy far, far away...",
+    "A young hero embarks on a journey of self-discovery.",
+    "Villains lurk in the shadows, plotting their schemes.",
+    "Friendship and courage light the way in the darkness.",
+  ];
 
   useEffect(() => {
-    // Set the flag to true after the component has mounted on the client
     setHasMounted(true);
   }, []);
 
   useEffect(() => {
     if (hasMounted) {
-      const defaultText = "Once upon a time in a galaxy far, far away...";
-      let i = 0;
+      let lineCounter = 0;
+      let charIndex = 0;
+      let isTyping = true;
+      let plotText = ""; // to accumulate text
+
       const typingEffect = setInterval(() => {
-        if (i < defaultText.length) {
-          setPlotInput((prev) => prev + defaultText.charAt(i));
-          i++;
+        if (isTyping) {
+          if (charIndex < lines[lineCounter].length) {
+            plotText += lines[lineCounter].charAt(charIndex); // accumulate char
+            setPlotInput(plotText); // update state
+            charIndex++;
+          } else {
+            isTyping = false; // stop typing when the current line is complete
+          }
         } else {
-          clearInterval(typingEffect);
+          if (charIndex > 0) {
+            plotText = plotText.slice(0, -1); // remove last character
+            setPlotInput(plotText); // update state
+            charIndex--;
+          } else {
+            // Move to the next line
+            lineCounter++;
+            if (lineCounter >= lines.length) {
+              // Reset lineCounter and charIndex to restart the effect
+              lineCounter = 0;
+              charIndex = 0;
+            }
+            isTyping = true; // resume typing
+          }
         }
       }, 100);
 
-      return () => clearInterval(typingEffect); // Clean up interval when component unmounts
+      return () => clearInterval(typingEffect);
     }
   }, [hasMounted]);
 
-  // If the component has not yet mounted on the client, return null to prevent any SSR mismatch
   if (!hasMounted) return null;
 
   return (
