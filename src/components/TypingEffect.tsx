@@ -1,10 +1,12 @@
-'use client'
+'use client';
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 
 export default function TypingEffect() {
     const [plotInput, setPlotInput] = useState("");
-    const [hasMounted, setHasMounted] = useState(false); 
+    const [hasMounted, setHasMounted] = useState(false);
+    const router = useRouter();
 
     const lines = [
         "Once upon a time in a galaxy far, far away...",
@@ -22,21 +24,21 @@ export default function TypingEffect() {
             let lineCounter = 0;
             let charIndex = 0;
             let isTyping = true;
-            let plotText = ""; 
+            let plotText = "";
 
             const typingEffect = setInterval(() => {
                 if (isTyping) {
                     if (charIndex < lines[lineCounter].length) {
                         plotText += lines[lineCounter].charAt(charIndex);
-                        setPlotInput(plotText); 
+                        setPlotInput(plotText);
                         charIndex++;
                     } else {
                         isTyping = false;
                     }
                 } else {
                     if (charIndex > 0) {
-                        plotText = plotText.slice(0, -1); 
-                        setPlotInput(plotText); 
+                        plotText = plotText.slice(0, -1);
+                        setPlotInput(plotText);
                         charIndex--;
                     } else {
                         lineCounter++;
@@ -51,16 +53,21 @@ export default function TypingEffect() {
 
             return () => clearInterval(typingEffect);
         }
-    }, [hasMounted]); // Only include `hasMounted` here
+    }, [hasMounted]);
 
     if (!hasMounted) return null;
 
+    const handleClick = () => {
+        router.push("/storyboard");
+    };
+
     return (
-        <div>
+        <div onClick={handleClick} className="cursor-pointer">
             <Textarea
                 value={plotInput}
                 onChange={(e) => setPlotInput(e.target.value)}
                 placeholder="Once upon a time in a galaxy far, far away..."
+                readOnly
                 className="mb-4 h-48 resize-none border-purple-300 relative focus:border-pink-500 focus:ring-pink-500 dark:bg-gray-950 dark:border-purple-600 dark:text-white dark:placeholder-gray-400"
             />
         </div>

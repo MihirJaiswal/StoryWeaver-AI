@@ -74,7 +74,7 @@ Image URL: ${scene.imageUrl}
               disabled={isLoading}
             />
           </div>
-          <div className="flex justify-between space-x-4">
+          <div className="flex flex-col md:flex-row justify-between space-4 gap-4">
           <Button
             type="submit"
             disabled={isLoading || !plot.trim()}
