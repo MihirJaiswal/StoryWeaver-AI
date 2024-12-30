@@ -5,7 +5,6 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export function useStoryboard(): StoryboardHook {
   const [scenes, setScenes] = useState<Scene[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const generateImage = async (summary: string, retryCount = 0): Promise<string> => {
@@ -31,17 +30,13 @@ export function useStoryboard(): StoryboardHook {
       }
 
       if (!response.ok) {
-        const errorMessage = `Image generation failed: ${response.status}`;
-        setError(errorMessage);
-        throw new Error(errorMessage);
+        throw new Error(`Image generation failed: ${response.status}`);
       }
 
       const blob = await response.blob();
       return URL.createObjectURL(blob);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
       console.error("Image generation error:", error);
-      setError(errorMessage);
       throw error;
     }
   };
@@ -50,21 +45,25 @@ export function useStoryboard(): StoryboardHook {
     if (!scenes[index]) return;
 
     try {
-      setScenes(prev => prev.map((scene, i) => 
-        i === index ? { ...scene, imageStatus: 'loading' } : scene
-      ));
+      setScenes(prev =>
+        prev.map((scene, i) =>
+          i === index ? { ...scene, imageStatus: "loading" } : scene
+        )
+      );
 
       const imageUrl = await generateImage(scenes[index].summary);
-      
-      setScenes(prev => prev.map((scene, i) => 
-        i === index ? { ...scene, imageUrl, imageStatus: 'success' } : scene
-      ));
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "An error occurred while retrying the image";
-      setError(errorMessage);
-      setScenes(prev => prev.map((scene, i) => 
-        i === index ? { ...scene, imageStatus: 'error' } : scene
-      ));
+
+      setScenes(prev =>
+        prev.map((scene, i) =>
+          i === index ? { ...scene, imageUrl, imageStatus: "success" } : scene
+        )
+      );
+    } catch {
+      setScenes(prev =>
+        prev.map((scene, i) =>
+          i === index ? { ...scene, imageStatus: "error" } : scene
+        )
+      );
     }
   };
 
@@ -72,47 +71,48 @@ export function useStoryboard(): StoryboardHook {
     const patterns = [
       /\*\*Scene \d+:?\s*([^\*]+)\*\*[\s\n]*\*Summary:?\*[\s\n]*(.+?)[\s\n]*\*Sample Dialogue:?\*[\s\n]*(.+?)(?=\*\*Scene|\n*$)/gis,
       /Scene \d+:?\s*(.+?)[\s\n]*Summary:?\s*(.+?)[\s\n]*Sample Dialogue:?\s*(.+?)(?=Scene|\n*$)/gis,
-      /\d+\.\s*(.+?)[\s\n]*Summary:?\s*(.+?)[\s\n]*Dialogue:?\s*(.+?)(?=\d+\.|\n*$)/gis
+      /\d+\.\s*(.+?)[\s\n]*Summary:?\s*(.+?)[\s\n]*Dialogue:?\s*(.+?)(?=\d+\.|\n*$)/gis,
     ];
 
-    const normalizedText = text.replace(/\r\n/g, '\n');
+    const normalizedText = text.replace(/\r\n/g, "\n");
 
     for (const pattern of patterns) {
       const matches = Array.from(normalizedText.matchAll(pattern));
       if (matches.length > 0) {
         return matches.map(match => ({
-          summary: match[2]?.trim().replace(/\n+/g, ' ') || '',
-          dialogue: match[3]?.trim().replace(/\n+/g, ' ') || '',
-          imageStatus: 'loading',
-          imageUrl: ''
+          summary: match[2]?.trim().replace(/\n+/g, " ") || "",
+          dialogue: match[3]?.trim().replace(/\n+/g, " ") || "",
+          imageStatus: "loading",
+          imageUrl: "",
         }));
       }
     }
 
-    throw new Error('Could not parse scenes from the response text');
+    throw new Error("Could not parse scenes from the response text");
   };
 
   const generateImagesSequentially = async (parsedScenes: Scene[]) => {
     for (let i = 0; i < parsedScenes.length; i++) {
       try {
         const imageUrl = await generateImage(parsedScenes[i].summary);
-        setScenes(prev => prev.map((scene, index) => 
-          index === i ? { ...scene, imageUrl, imageStatus: 'success' } : scene
-        ));
+        setScenes(prev =>
+          prev.map((scene, index) =>
+            index === i ? { ...scene, imageUrl, imageStatus: "success" } : scene
+          )
+        );
         await delay(1000);
-      } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : "An error occurred while retrying the image";
-        setError(errorMessage);
-        setScenes(prev => prev.map((scene, index) => 
-          index === i ? { ...scene, imageStatus: 'error' } : scene
-        ));
+      } catch {
+        setScenes(prev =>
+          prev.map((scene, index) =>
+            index === i ? { ...scene, imageStatus: "error" } : scene
+          )
+        );
       }
     }
   };
 
   const segmentScenes = async (plot: string): Promise<void> => {
     setIsLoading(true);
-    setError(null);
 
     try {
       const prompt = `
@@ -133,15 +133,15 @@ export function useStoryboard(): StoryboardHook {
 
         Movie Plot: 
         ${plot}
-      `.trim(); 
+      `.trim();
 
       const response = await fetch(
-        'https://api-inference.huggingface.co/models/Qwen/QwQ-32B-Preview',
+        "https://api-inference.huggingface.co/models/Qwen/QwQ-32B-Preview",
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUGGINGFACE_TOKEN}`
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUGGINGFACE_TOKEN}`,
           },
           body: JSON.stringify({
             inputs: prompt,
@@ -160,18 +160,18 @@ export function useStoryboard(): StoryboardHook {
       }
 
       const data = await response.json();
-      
+
       if (!Array.isArray(data) || !data[0]?.generated_text) {
-        throw new Error('Invalid API response format');
+        throw new Error("Invalid API response format");
       }
 
       const generatedText = data[0].generated_text;
-      console.log('Generated text:', generatedText);
+      console.log("Generated text:", generatedText);
 
       const parsedScenes = parseScenes(generatedText);
-      
+
       if (parsedScenes.length === 0) {
-        throw new Error('No scenes were found in the generated text');
+        throw new Error("No scenes were found in the generated text");
       }
 
       // Set scenes immediately with loading image status
@@ -180,15 +180,11 @@ export function useStoryboard(): StoryboardHook {
       // Generate images asynchronously
       generateImagesSequentially(parsedScenes);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
-      console.error('Scene segmentation error:', err);
-      setError(errorMessage);
-      setScenes([]);
+      console.error("Scene segmentation error:", err);
     } finally {
       setIsLoading(false);
     }
   };
 
-  return { scenes, segmentScenes, error, isLoading, retryImage };
+  return { scenes, segmentScenes, isLoading, retryImage, error: null }; 
 }
-
