@@ -146,7 +146,7 @@ Image URL: ${scene.imageUrl}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <p className="text-xl">No scenes available. Provide a plot to begin your journey!</p>
+              <p className="text-xl">No scenes available or the API may be temporarily down. Please try again later.</p>
             </motion.div>
           )}
         </AnimatePresence>
