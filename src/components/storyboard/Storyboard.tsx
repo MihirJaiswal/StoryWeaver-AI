@@ -9,6 +9,7 @@ import { Loader2, Sparkles, ImageOff, RefreshCcw, Download} from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
 import { saveAs } from 'file-saver';
 import SparklesText from "../ui/sparkles-text";
+import Image from "next/image";
 
 export default function Storyboard() {
   const { scenes, segmentScenes, isLoading, error, retryImage } = useStoryboard();
@@ -211,7 +212,10 @@ Image URL: ${scene.imageUrl}
                            </div>
                          )}
                          {scene.imageStatus === 'success' && scene.imageUrl && (
-                           <img
+                           <Image
+                             width={256}
+                             height={256}
+                             loading="lazy"
                              src={scene.imageUrl}
                              alt={`Scene ${index + 1}`}
                              className="w-full h-full object-center"

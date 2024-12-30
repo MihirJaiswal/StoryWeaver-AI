@@ -4,6 +4,7 @@ import HomeNav from './HomeNav';
 import HomeMobileNav from './HomeMobileNav';
 import { ModeToggle } from './ModeToggle';
 import logo from '../../public/logo.png'
+import Link from 'next/link';
 
 const HomeHeader = () => {
   return (
@@ -12,7 +13,7 @@ const HomeHeader = () => {
       <div className='flex items-center md:hidden'>
           <ModeToggle />
         </div>
-        <a href="/" className='md:flex items-center w-full xl:mr-8 hidden'>
+        <Link href="/" className='md:flex items-center w-full xl:mr-8 hidden'>
           <Image 
             alt='logo'
             src={logo}
@@ -24,7 +25,7 @@ const HomeHeader = () => {
           <p className='text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-pink-700 font-bold text-2xl transition-all duration-300 hover:text-pink-700 max-lg:hidden'>
             StoryWeaver <span className='text-pink-700'>AI</span>
           </p>
-        </a>
+        </Link>
         <div className="hidden lg:flex space-x-8 items-center">
           <HomeNav />
         </div>
