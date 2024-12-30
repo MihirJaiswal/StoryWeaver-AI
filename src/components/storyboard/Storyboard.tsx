@@ -117,8 +117,9 @@ Image URL: ${scene.imageUrl}
               exit={{ opacity: 0 }}
             >
               <Loader2 className="h-12 w-12 animate-spin text-purple-600 dark:text-purple-400" />
-              <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">Generating scenes...</p>
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Images will be created after scene generation</p>
+              <p className="mt-4 text-lg text-gray-950 dark:text-gray-300">Generating scenes...</p>
+              <p className="mt-2 text-sm text-gray-800 dark:text-gray-400">
+              Click "Retry" to attempt generating the image again if it wasn't successfully created.</p>
             </motion.div>
           )}
         </AnimatePresence>
