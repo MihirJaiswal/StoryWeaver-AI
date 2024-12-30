@@ -6,6 +6,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 export function useStoryboard(): StoryboardHook {
   const [scenes, setScenes] = useState<Scene[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null); // Added error state
 
   const generateImage = async (summary: string, retryCount = 0): Promise<string> => {
     try {
@@ -37,6 +38,7 @@ export function useStoryboard(): StoryboardHook {
       return URL.createObjectURL(blob);
     } catch (error) {
       console.error("Image generation error:", error);
+      setError(`Image generation error`); // Set error state here
       throw error;
     }
   };
@@ -58,7 +60,10 @@ export function useStoryboard(): StoryboardHook {
           i === index ? { ...scene, imageUrl, imageStatus: "success" } : scene
         )
       );
-    } catch {
+    } catch (err) {
+      console.error("Error retrying image:", err);
+      const errorMessage = err instanceof Error ? err.message : "Unknown error";
+      setError(errorMessage)
       setScenes(prev =>
         prev.map((scene, i) =>
           i === index ? { ...scene, imageStatus: "error" } : scene
@@ -179,12 +184,13 @@ export function useStoryboard(): StoryboardHook {
 
       // Generate images asynchronously
       generateImagesSequentially(parsedScenes);
-    } catch (err) {
-      console.error("Scene segmentation error:", err);
+    } catch (error) {
+      console.error("Scene segmentation error:", error);
+      setError(`Scene segmentation error`); // Set error state here
     } finally {
       setIsLoading(false);
     }
   };
 
-  return { scenes, segmentScenes, isLoading, retryImage, error: null }; 
+  return { scenes, segmentScenes, isLoading, retryImage, error }; // Return error state
 }

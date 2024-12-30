@@ -150,15 +150,6 @@ Image URL: ${scene.imageUrl}
             </motion.div>
           )}
         </AnimatePresence>
-
-        <AnimatePresence>
-        { error && (
-          <motion.div className="flex justify-center">
-            <p>An error occurred while generating the scenes or may be the API is down for maintenance.</p>
-          </motion.div>
-        )}
-
-        </AnimatePresence>
         {/* Scenes Grid */}
         <AnimatePresence>
           {!isLoading && !error && scenes.length > 0 && (
