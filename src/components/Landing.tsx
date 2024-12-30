@@ -79,13 +79,13 @@ export default function Landing() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-purple-100 dark:bg-purple-900 p-4 rounded-lg border border-gray-400 dark:border-gray-600">
-                    <p className="text-purple-800 dark:text-purple-200"><strong>Alice:</strong> <span className='italic font-sans'>"Did you see that peculiar shimmer in the night sky?"</span></p>
+                    <p className="text-purple-800 dark:text-purple-200"><strong>Alice:</strong> <span className='italic font-sans'> &quot;Did you see that peculiar shimmer in the night sky?  &quot;</span></p>
                   </div>
                   <div className="bg-pink-100 dark:bg-pink-900 p-4 rounded-lg border border-gray-400 dark:border-gray-600">
-                    <p className="text-pink-800 dark:text-pink-200"><strong>Bob:</strong> <span className='italic font-sans'> "I thought my eyes were playing tricks on me. What could it possibly be?"</span> </p>
+                    <p className="text-pink-800 dark:text-pink-200"><strong>Bob:</strong> <span className='italic font-sans'>  &quot; I thought my eyes were playing tricks on me. What could it possibly be?  &quot;</span> </p>
                   </div>
                   <div className="bg-purple-100 dark:bg-purple-900 p-4 rounded-lg border border-gray-400 dark:border-gray-600">
-                    <p className="text-purple-800 dark:text-purple-200"><strong>Alice:</strong> <span className='italic font-sans'>"I'm not certain, but I have an inexplicable feeling that our lives are about to take an extraordinary turn."</span></p>
+                    <p className="text-purple-800 dark:text-purple-200"><strong>Alice:</strong> <span className='italic font-sans'> &quot; I'm not certain, but I have an inexplicable feeling that our lives are about to take an extraordinary turn.  &quot;</span></p>
                   </div>
                 </div>
                 <div className="flex items-center justify-center">

@@ -11,58 +11,58 @@ export default function TypingEffect() {
         "A young hero embarks on a journey of self-discovery.",
         "Villains lurk in the shadows, plotting their schemes.",
         "Friendship and courage light the way in the darkness.",
-      ];
-    
-      useEffect(() => {
+    ];
+
+    useEffect(() => {
         setHasMounted(true);
-      }, []);
-    
-      useEffect(() => {
+    }, []);
+
+    useEffect(() => {
         if (hasMounted) {
-          let lineCounter = 0;
-          let charIndex = 0;
-          let isTyping = true;
-          let plotText = ""; 
-    
-          const typingEffect = setInterval(() => {
-            if (isTyping) {
-              if (charIndex < lines[lineCounter].length) {
-                plotText += lines[lineCounter].charAt(charIndex);
-                setPlotInput(plotText); 
-                charIndex++;
-              } else {
-                isTyping = false;
-              }
-            } else {
-              if (charIndex > 0) {
-                plotText = plotText.slice(0, -1); 
-                setPlotInput(plotText); 
-                charIndex--;
-              } else {
-                lineCounter++;
-                if (lineCounter >= lines.length) {
-                  lineCounter = 0;
-                  charIndex = 0;
+            let lineCounter = 0;
+            let charIndex = 0;
+            let isTyping = true;
+            let plotText = ""; 
+
+            const typingEffect = setInterval(() => {
+                if (isTyping) {
+                    if (charIndex < lines[lineCounter].length) {
+                        plotText += lines[lineCounter].charAt(charIndex);
+                        setPlotInput(plotText); 
+                        charIndex++;
+                    } else {
+                        isTyping = false;
+                    }
+                } else {
+                    if (charIndex > 0) {
+                        plotText = plotText.slice(0, -1); 
+                        setPlotInput(plotText); 
+                        charIndex--;
+                    } else {
+                        lineCounter++;
+                        if (lineCounter >= lines.length) {
+                            lineCounter = 0;
+                            charIndex = 0;
+                        }
+                        isTyping = true;
+                    }
                 }
-                isTyping = true;
-              }
-            }
-          }, 100);
-    
-          return () => clearInterval(typingEffect);
+            }, 100);
+
+            return () => clearInterval(typingEffect);
         }
-      }, [hasMounted]);
-    
-      if (!hasMounted) return null;
-    
-  return (
-    <div>
-      <Textarea
-                  value={plotInput}
-                  onChange={(e) => setPlotInput(e.target.value)}
-                  placeholder="Once upon a time in a galaxy far, far away..."
-                  className="mb-4 h-48 resize-none border-purple-300 relative focus:border-pink-500 focus:ring-pink-500 dark:bg-gray-950 dark:border-purple-600 dark:text-white dark:placeholder-gray-400"
-                />
-    </div>
-  )
+    }, [hasMounted]); // Only include `hasMounted` here
+
+    if (!hasMounted) return null;
+
+    return (
+        <div>
+            <Textarea
+                value={plotInput}
+                onChange={(e) => setPlotInput(e.target.value)}
+                placeholder="Once upon a time in a galaxy far, far away..."
+                className="mb-4 h-48 resize-none border-purple-300 relative focus:border-pink-500 focus:ring-pink-500 dark:bg-gray-950 dark:border-purple-600 dark:text-white dark:placeholder-gray-400"
+            />
+        </div>
+    );
 }
