@@ -186,7 +186,7 @@ export function useStoryboard(): StoryboardHook {
       generateImagesSequentially(parsedScenes);
     } catch (error) {
       console.error("Scene segmentation error:", error);
-      setError(`Scene segmentation error`); // Set error state here
+      setError(`Scene segmentation error. API is currently unavailable. please try again after some times`); // Set error state here
     } finally {
       setIsLoading(false);
     }
