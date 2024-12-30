@@ -38,7 +38,6 @@ export function useStoryboard(): StoryboardHook {
       return URL.createObjectURL(blob);
     } catch (error) {
       console.error("Image generation error:", error);
-      setError(`Image generation error`); // Set error state here
       throw error;
     }
   };
