@@ -9,7 +9,6 @@ export interface Scene {
   export interface StoryboardHook {
     scenes: Scene[];
     segmentScenes: (plot: string) => Promise<void>;
-    error: string | null;
     isLoading: boolean;
     retryImage: (index: number) => Promise<void>;
   }

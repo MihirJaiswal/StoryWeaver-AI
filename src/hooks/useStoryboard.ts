@@ -6,7 +6,6 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 export function useStoryboard(): StoryboardHook {
   const [scenes, setScenes] = useState<Scene[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null); // Added error state
 
   const generateImage = async (summary: string, retryCount = 0): Promise<string> => {
     try {
@@ -31,7 +30,7 @@ export function useStoryboard(): StoryboardHook {
       }
 
       if (!response.ok) {
-        throw new Error(`Image generation failed: ${response.status}`);
+        throw new Error(`I${response.status}`);
       }
 
       const blob = await response.blob();
@@ -60,7 +59,6 @@ export function useStoryboard(): StoryboardHook {
       );
     } catch (err) {
       console.error("Error retrying image:", err);
-      const errorMessage = err instanceof Error ? err.message : "Unknown error";
       setScenes(prev =>
         prev.map((scene, i) =>
           i === index ? { ...scene, imageStatus: "error" } : scene
@@ -183,11 +181,10 @@ export function useStoryboard(): StoryboardHook {
       generateImagesSequentially(parsedScenes);
     } catch (error) {
       console.error("Scene segmentation error:", error);
-      setError(`Scene segmentation error. API is currently unavailable. please try again after some times`); // Set error state here
     } finally {
       setIsLoading(false);
     }
   };
 
-  return { scenes, segmentScenes, isLoading, retryImage, error }; // Return error state
+  return { scenes, segmentScenes, isLoading, retryImage };
 }

@@ -12,7 +12,7 @@ import SparklesText from "../ui/sparkles-text";
 import Image from "next/image";
 
 export default function Storyboard() {
-  const { scenes, segmentScenes, isLoading, error, retryImage } = useStoryboard();
+  const { scenes, segmentScenes, isLoading, retryImage } = useStoryboard();
   const [plot, setPlot] = useState("");
 
 
@@ -123,23 +123,9 @@ Image URL: ${scene.imageUrl}
           )}
         </AnimatePresence>
 
-        {/* Error State */}
-        <AnimatePresence>
-          {error && (
-            <motion.div
-              className="p-4 bg-red-50 dark:bg-red-900/50 text-red-500 dark:text-red-300 rounded-md shadow-md"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-            >
-              <p className="text-center">{error}</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
         {/* Empty State */}
         <AnimatePresence>
-          {!isLoading && !error && scenes.length === 0 && (
+          {!isLoading  && scenes.length === 0 && (
             <motion.div
               className="text-center text-gray-900 dark:text-gray-50 py-12"
               initial={{ opacity: 0 }}
@@ -152,7 +138,7 @@ Image URL: ${scene.imageUrl}
         </AnimatePresence>
         {/* Scenes Grid */}
         <AnimatePresence>
-          {!isLoading && !error && scenes.length > 0 && (
+          {!isLoading && scenes.length > 0 && (
             <>
               <motion.div
                 className="flex justify-end mb-4"
