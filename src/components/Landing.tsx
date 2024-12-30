@@ -5,6 +5,7 @@ import { Stars } from "lucide-react";
 import SparklesText from "./ui/sparkles-text";
 import TypingEffect from "./TypingEffect";
 import { MotionDiv } from "./MotionDiv";
+import Link from "next/link";
 
 export default function Landing() {
   return (
@@ -34,13 +35,14 @@ export default function Landing() {
             <div className="p-6">
               <form>
                 <TypingEffect/>
+                <Link href="/storyboard">
                 <Button
-                  type="submit"
                   className="w-full bg-purple-600 hover:bg-purple-700 text-white text-lg dark:bg-purple-700 dark:hover:bg-purple-800"
                 >
                   Generate My Story
                   <Sparkles className="ml-2 h-4 w-4" />
                 </Button>
+                </Link>
               </form>
             </div>
           </MotionDiv>
@@ -126,10 +128,12 @@ export default function Landing() {
           </div>
         </MotionDiv>
         <div className="text-center">
-          <Button size="lg" className="bg-pink-500 border border-gray-700 hover:bg-purple-600 text-white text-md dark:bg-pink-700 dark:hover:bg-purple-700 dark:border-gray-600">
+         <Link href="/storyboard">
+         <Button size="lg" className="bg-pink-500 border border-gray-700 hover:bg-purple-600 text-white text-md dark:bg-pink-700 dark:hover:bg-purple-700 dark:border-gray-600">
             Start Your Cinematic Journey
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
+         </Link>
         </div>
       </main>
     </div>

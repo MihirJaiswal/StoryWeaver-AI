@@ -1,5 +1,6 @@
 import { Twitter, GithubIcon, Linkedin, Instagram } from "lucide-react";
 import { MotionDiv } from "./MotionDiv";
+import Link from "next/link";
 export default function WavyFooter() {
   return (
     <>
@@ -23,12 +24,12 @@ export default function WavyFooter() {
       <footer className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-300">
         <div className="container mx-auto px-4 py-8 flex justify-between items-center max-w-7xl">
           <div className="md:flex flex-col space-y-2 text-left  hidden">
-            <a href="#about" className="hover:underline text-gray-600 dark:text-gray-400">
+            <Link href="/" className="hover:underline text-gray-600 dark:text-gray-400">
               Home
-            </a>
-            <a href="#contact" className="hover:underline text-gray-600 dark:text-gray-400">
+            </Link>
+            <Link href="/storyboard" className="hover:underline text-gray-600 dark:text-gray-400">
               StoryBoard
-            </a>
+            </Link>
             <a href="#contact" className="hover:underline text-gray-600 dark:text-gray-400">
               Stories
             </a>
@@ -76,16 +77,16 @@ export default function WavyFooter() {
           </div>
           <div className="md:flex flex-col space-y-2 text-right hidden">
             <a
-              href="#follow-us"
+              href="#features"
               className="hover:underline text-gray-600 dark:text-gray-400"
             >
-              Follow 
+              Feature
             </a>
             <a
-              href="#careers"
+              href="#working"
               className="hover:underline text-gray-600 dark:text-gray-400"
             >
-              Careers
+              Working
             </a>
           </div>
         </div>
