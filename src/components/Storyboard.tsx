@@ -182,7 +182,7 @@ Image URL: ${scene.imageUrl}
                  transition={{ duration: 0.3, delay: index * 0.1 }}
                >
                  <Card className="border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white dark:bg-gray-800 overflow-hidden h-full rounded-lg">
-                   <CardHeader className="bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900 dark:to-blue-900 p-4 rounded-t-lg">
+                   <CardHeader className="bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900 dark:to-pink-900 p-4 rounded-t-lg">
                      <CardTitle className="text-xl font-bold text-gray-800 dark:text-gray-100">Scene {index + 1}</CardTitle>
                    </CardHeader>
                    <CardContent className="p-6">
