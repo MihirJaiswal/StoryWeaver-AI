@@ -57,10 +57,10 @@ export function ModeToggle() {
               key={i}
               className={`absolute bg-white rounded-full transition-all transform ${theme === "dark" ? "opacity-100 scale-150" : "opacity-0 scale-0"}`}
               style={{
-                width: `${[3, 3, 3, 2, 2][i]}px`,
-                height: `${[3, 3, 3, 2, 2][i]}px`,
-                top: `${[4, 12, 12, 20, 6][i]}px`,
-                left: `${[20, 10, 20, 20, 15][i]}px`,
+                width: `${[2, 2, 2, 2, 2][i]}px`,
+                height: `${[2, 2, 2, 2, 2][i]}px`,
+                top: `${[20, 12, 12, 20, 6][i]}px`,
+                left: `${[12, 10, 20, 20, 15][i]}px`,
                 animation: `twinkle ${1.5 + i * 0.3}s infinite`,
               }}
             ></div>

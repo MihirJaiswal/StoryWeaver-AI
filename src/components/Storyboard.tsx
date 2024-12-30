@@ -1,14 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, } from "react";
 import { useStoryboard } from "@/hooks/useStoryboard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
-import { Loader2, Sparkles, ImageOff, RefreshCcw, Download, Moon, Sun } from 'lucide-react';
+import { Loader2, Sparkles, ImageOff, RefreshCcw, Download} from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
 import { saveAs } from 'file-saver';
+import SparklesText from "./ui/sparkles-text";
 
 export default function Storyboard() {
   const { scenes, segmentScenes, isLoading, error, retryImage } = useStoryboard();
@@ -37,7 +37,7 @@ Image URL: ${scene.imageUrl}
   
 
   return (
-    <div className='min-h-screen pt-20'>
+    <div className='min-h-screen pt-24'>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 transition-colors duration-300 ">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -45,10 +45,7 @@ Image URL: ${scene.imageUrl}
           transition={{ duration: 0.5 }}
           className="flex justify-between items-center"
         >
-          <h1 className="text-4xl w-full font-bold text-center my-4  text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-pink-700 ">
-            Storyboard Generator
-          </h1>
-         
+          <SparklesText text="Storyboard Generator" className="text-4xl w-full font-bold text-center my-4" sparklesCount={3} />
         </motion.div>
 
         {/* Input Form */}

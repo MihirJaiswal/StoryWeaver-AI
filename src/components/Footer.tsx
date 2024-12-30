@@ -1,8 +1,14 @@
+"use client";
 import { Twitter, GithubIcon, Linkedin, Instagram } from "lucide-react";
-
+import { motion } from "framer-motion";
 export default function WavyFooter() {
   return (
-    <div className="relative">
+    <>
+    <motion.div
+    className="relative" 
+    initial={{ opacity: 0, y: -20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}>
       {/* Wavy SVG */}
       <div className="overflow-hidden">
         <svg
@@ -83,23 +89,12 @@ export default function WavyFooter() {
           {/* Right Side - Additional Links or Newsletter */}
           <div className="md:flex flex-col space-y-2 text-right hidden">
             <a
-              href="#subscribe"
-              className="hover:underline text-gray-600 dark:text-gray-400"
-            >
-              Subscribe to Newsletter
-            </a>
-            <a
               href="#follow-us"
               className="hover:underline text-gray-600 dark:text-gray-400"
             >
-              Follow Us
+              Follow 
             </a>
-            <a
-              href="#faq"
-              className="hover:underline text-gray-600 dark:text-gray-400"
-            >
-              FAQ
-            </a>
+
             <a
               href="#careers"
               className="hover:underline text-gray-600 dark:text-gray-400"
@@ -109,6 +104,7 @@ export default function WavyFooter() {
           </div>
         </div>
       </footer>
-    </div>
+    </motion.div>
+    </>
   );
 }

@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils'
 import { navigation } from '../../constant/index'
 import Hamburger from '../../public/hamburger.svg'
 import { DialogTitle } from '@radix-ui/react-dialog' // Import DialogTitle
+import { MenuIcon } from 'lucide-react'
 
 function HomeMobileNav() {
     const pathname = usePathname();
@@ -22,15 +23,9 @@ function HomeMobileNav() {
       <div className='flex flex-col md:hidden'>
         <Sheet>
           <SheetTrigger asChild>
-            <Image 
-              src={Hamburger}
-              width={36}
-              height={36}
-              alt="hamburger"
-              className='cursor-pointer sm:hidden' 
-            />
+            <MenuIcon className='w-8 h-8 text-pink-700 dark:text-white' />
           </SheetTrigger>
-          <SheetContent side='right' className='bg-black bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-5 border-gray-700'>
+          <SheetContent side='right' className='bg-white dark:bg-black bg-clip-padding backdrop-filter backdrop-blur-sm border-gray-700'>
             
             {/* Add DialogTitle here */}
             <DialogTitle className="sr-only">Menu</DialogTitle> {/* Visually hidden title for accessibility */}
@@ -43,18 +38,18 @@ function HomeMobileNav() {
                   alt='logo'
                   className='max-sm:size-10'
               /> */}
-              <p className='text-[21px] font-bold text-white px-2 mt-1'>StoryWeaver AI</p>
+              <p className='text-[21px] font-bold  text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-pink-700 px-2 mt-1'>StoryWeaver AI</p>
             </Link>
             
             <div className='flex h-[calc(100vh-72px)] flex-col justify-between overflow-y-auto'>
               <SheetClose asChild>
-                <section className='flex h-full flex-col gap-6 pt-16 text-white'>
+                <section className='flex h-full flex-col gap-6 pt-16 text-black dark:text-white'>
                   <div className='flex flex-1 flex-col gap-6'>
                     {navigation.map((link) => {
                       const isActive = pathname === link.route;
                       return (
                         <SheetClose asChild key={link.route}>
-                          <Link href={link.route} key={link.label} className={cn("flex gap-4 items-center p-4 rounded-lg w-full max-w-60", { 'bg-pink-600 dark:bg-purple-600': isActive, })}>
+                          <Link href={link.route} key={link.label} className={cn("flex gap-4 items-center p-4 rounded-md w-full max-w-60", { 'bg-pink-600 dark:bg-purple-600 text-white dark:text-black ': isActive, })}>
                             <p className='font-semibold text-[18px] '>{link.title}</p>
                           </Link>
                         </SheetClose>

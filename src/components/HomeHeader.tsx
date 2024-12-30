@@ -39,7 +39,7 @@ const HomeHeader = () => {
         </div>
 
        {/* Dark Mode Toggle */}
-       <div className='flex items-center md:block'>
+       <div className='md:flex items-center hidden'>
           <ModeToggle />
         </div>
       </div>

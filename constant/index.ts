@@ -6,7 +6,7 @@ export const navigation = [
     },
     {
       label: "1",
-      title: "Storyboard",
+      title: "storyboard",
       route: "/storyboard",
     },
   ];
