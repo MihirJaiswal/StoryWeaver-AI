@@ -1,6 +1,6 @@
 import WavyFooter from '@/components/Footer'
 import HomeHeader from '@/components/HomeHeader'
-import Storyboard from '@/components/Storyboard'
+import Storyboard from '@/components/storyboard/Storyboard'
 export default function page() {
   return (
     <div className='bg-img1 dark:bg-img2'>

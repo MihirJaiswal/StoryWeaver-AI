@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Loader2, Sparkles, ImageOff, RefreshCcw, Download} from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
 import { saveAs } from 'file-saver';
-import SparklesText from "./ui/sparkles-text";
+import SparklesText from "../ui/sparkles-text";
 
 export default function Storyboard() {
   const { scenes, segmentScenes, isLoading, error, retryImage } = useStoryboard();
