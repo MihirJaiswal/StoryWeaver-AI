@@ -30,7 +30,7 @@ export function useStoryboard(): StoryboardHook {
       }
 
       if (!response.ok) {
-        throw new Error(`I${response.status}`);
+        throw new Error(`Ab mujh se to koi umeed rakho nhi mein bhot jhel chuka hu aapko${response.status}`);
       }
 
       const blob = await response.blob();

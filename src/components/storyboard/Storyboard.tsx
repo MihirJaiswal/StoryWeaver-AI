@@ -223,7 +223,7 @@ Image URL: ${scene.imageUrl}
                                return (
                                   <div
                                    key={i}
-                                   className={`flex items-start gap-3 p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-sm transition-transform transform  ${
+                                   className={`md:flex items-start gap-3 p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-sm transition-transform transform  ${
                                      i % 2 === 0
                                        ? 'bg-gradient-to-b from-pink-50 to-pink-100 dark:from-gray-900 dark:to-gray-950 dark:text-white'
                                        : 'bg-gradient-to-r from-green-100 to-green-200 dark:from-green-900 dark:to-green-800'
