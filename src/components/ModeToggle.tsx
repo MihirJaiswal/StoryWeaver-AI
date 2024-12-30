@@ -12,7 +12,7 @@ export function ModeToggle() {
   }, []);
 
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    setTheme(theme === "light" ? "dark" : "light");
   };
 
   if (!mounted) return null; 
