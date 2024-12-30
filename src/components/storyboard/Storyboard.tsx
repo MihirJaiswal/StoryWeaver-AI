@@ -146,11 +146,19 @@ Image URL: ${scene.imageUrl}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <p className="text-xl">No scenes available or the API may be temporarily down. Please try again later.</p>
+              <p className="text-xl">No scenes available</p>
             </motion.div>
           )}
         </AnimatePresence>
 
+        <AnimatePresence>
+        { error && (
+          <motion.div className="flex justify-center">
+            <p>An error occurred while generating the scenes or may be the API is down for maintenance.</p>
+          </motion.div>
+        )}
+
+        </AnimatePresence>
         {/* Scenes Grid */}
         <AnimatePresence>
           {!isLoading && !error && scenes.length > 0 && (
