@@ -34,6 +34,10 @@ Image URL: ${scene.imageUrl}
     saveAs(blob, 'storyboard.txt');
   };
 
+  const handleClear = () => {
+    setPlot("");
+  }
+
   
 
   return (
@@ -65,15 +69,15 @@ Image URL: ${scene.imageUrl}
               value={plot}
               onChange={(e) => setPlot(e.target.value)}
               placeholder="Once upon a time in a galaxy far, far away..."
-              className="min-h-[200px] text-lg dark:bg-gray-700 dark:text-gray-100"
+              className="min-h-96 md:min-h-[200px] text-lg dark:bg-gray-700 dark:text-gray-100"
               disabled={isLoading}
             />
           </div>
+          <div className="flex justify-between space-x-4">
           <Button
             type="submit"
             disabled={isLoading || !plot.trim()}
-            className="w-full text-lg py-6 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 transition-all duration-300 text-white dark:from-purple-600 dark:to-purple-700 dark:hover:from-purple-700 dark:hover:to-purple-700"
-          >
+            className="w-full text-lg py-6 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 transition-all duration-300 text-white dark:from-purple-600 dark:to-purple-700 dark:hover:from-purple-700 dark:hover:to-purple-700">
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-5 w-5 animate-spin" />
@@ -86,6 +90,20 @@ Image URL: ${scene.imageUrl}
               </>
             )}
           </Button>
+          {plot && (
+            <button 
+              onClick={handleClear} 
+              className="text-lg px-6 py-2 bg-gradient-to-r from-purple-500 to-purple-600 
+                        hover:from-purple-600 hover:to-purple-700 transition-all duration-300 
+                        text-white dark:from-purple-600 dark:to-purple-700 
+                        dark:hover:from-purple-700 dark:hover:to-purple-800 
+                        rounded-md shadow-md hover:shadow-lg focus:outline-none focus:ring-2 
+                        focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+            >
+              Clear
+            </button>
+          )}
+          </div>
         </motion.form>
 
         {/* Loading State */}
@@ -214,10 +232,9 @@ Image URL: ${scene.imageUrl}
                              {scene.dialogue.split('\n').map((line, i) => {
                                const [speaker, ...speech] = line.split(':');
                                return (
-                                 <div>
                                   <div
                                    key={i}
-                                   className={`md:flex items-start gap-3 p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-sm transition-transform hidden transform  ${
+                                   className={`flex items-start gap-3 p-4 border border-gray-200 dark:border-gray-400 rounded-lg shadow-sm transition-transform transform  ${
                                      i % 2 === 0
                                        ? 'bg-gradient-to-b from-pink-50 to-pink-100 dark:from-gray-900 dark:to-gray-950 dark:text-white'
                                        : 'bg-gradient-to-r from-green-100 to-green-200 dark:from-green-900 dark:to-green-800'
@@ -225,9 +242,6 @@ Image URL: ${scene.imageUrl}
                                  >
                                    <span className="font-semibold text-pink-700 dark:text-purple-400 flex-shrink-0">{speaker}:</span>
                                    <span className="text-gray-950 dark:text-white leading-relaxed">{speech.join(':').trim()}</span>
-                                 </div>
-                                 <span className="font-semibold text-pink-700 dark:text-purple-400 flex-shrink-0 md:hidden">{speaker}: </span>
-                                 <span className="text-gray-950 dark:text-white leading-relaxed md:hidden">{speech.join(':').trim()}</span>
                                  </div>
                                );
                              })}

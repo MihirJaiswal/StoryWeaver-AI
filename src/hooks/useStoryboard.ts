@@ -108,20 +108,22 @@ export function useStoryboard(): StoryboardHook {
 
     try {
       const prompt = `
-        Analyze the following movie plot and segment it into distinct scenes.
-        For each scene, provide:
-        1. A concise summary of what happens
-        2. Sample dialogue that captures the essence of the scene
-        3. Style it in an anime/manga way, with vibrant, colorful, and expressive details.
-        
-        Format each scene as:
-        **Scene X**
-        *Summary:*
-        [Scene summary here]
-        *Sample Dialogue:*
-        [Sample dialogue here]
+         Analyze the following movie plot and break it down into distinct, sequential scenes. For each scene, provide the following:
 
-        Plot:
+       1. **Scene Summary**: 
+        - A concise, vivid summary of the key events, highlighting the emotional beats and character dynamics.
+       2. **Sample Dialogue**: 
+        - Include engaging and impactful dialogue between the characters that captures the essence of the scene.
+       3. Style it in an anime/manga way, with vibrant, colorful, and expressive details.
+        
+        Format each scene as follows:
+        **Scene X**  
+        *Summary:*  
+        [Write the scene summary here]  
+        *Sample Dialogue:*  
+        [Write the sample dialogue here]  
+
+        Movie Plot: 
         ${plot}
       `.trim(); 
 
