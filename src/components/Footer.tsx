@@ -1,15 +1,13 @@
-"use client";
 import { Twitter, GithubIcon, Linkedin, Instagram } from "lucide-react";
-import { motion } from "framer-motion";
+import { MotionDiv } from "./MotionDiv";
 export default function WavyFooter() {
   return (
     <>
-    <motion.div
+    <MotionDiv
     className="relative" 
     initial={{ opacity: 0, y: -20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5 }}>
-      {/* Wavy SVG */}
       <div className="overflow-hidden">
         <svg
           className="block w-full"
@@ -22,11 +20,8 @@ export default function WavyFooter() {
           ></path>
         </svg>
       </div>
-
-      {/* Footer Content */}
       <footer className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-300">
         <div className="container mx-auto px-4 py-8 flex justify-between items-center max-w-7xl">
-          {/* Left Side - Extra Links */}
           <div className="md:flex flex-col space-y-2 text-left  hidden">
             <a href="#about" className="hover:underline text-gray-600 dark:text-gray-400">
               Home
@@ -38,8 +33,6 @@ export default function WavyFooter() {
               Stories
             </a>
           </div>
-
-          {/* Center - Website Name, Social Links, and Copyright */}
           <div className="text-center w-full flex flex-col items-center justify-center">
             <h1 className="text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
               Storyweaver AI
@@ -47,8 +40,6 @@ export default function WavyFooter() {
             <p className="text-sm mt-2 text-gray-600 dark:text-gray-400">
               Unleashing Creativity Through Technology
             </p>
-
-            {/* Social Links */}
             <div className="flex items-center justify-center space-x-6 mt-6">
               <a
                 href="#"
@@ -79,14 +70,10 @@ export default function WavyFooter() {
                 <Instagram size={24} />
               </a>
             </div>
-
-            {/* Copyright */}
             <p className="text-xs mt-6">
               &copy; 2024 Storyweaver AI. All rights reserved.
             </p>
           </div>
-
-          {/* Right Side - Additional Links or Newsletter */}
           <div className="md:flex flex-col space-y-2 text-right hidden">
             <a
               href="#follow-us"
@@ -94,7 +81,6 @@ export default function WavyFooter() {
             >
               Follow 
             </a>
-
             <a
               href="#careers"
               className="hover:underline text-gray-600 dark:text-gray-400"
@@ -104,7 +90,7 @@ export default function WavyFooter() {
           </div>
         </div>
       </footer>
-    </motion.div>
+    </MotionDiv>
     </>
   );
 }

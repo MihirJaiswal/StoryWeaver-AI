@@ -7,7 +7,6 @@ export function ModeToggle() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Ensure the component only renders after the client-side hydration
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -16,25 +15,19 @@ export function ModeToggle() {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
-  if (!mounted) return null; // Prevent rendering before mount
-
+  if (!mounted) return null; 
   return (
     <div className="flex items-center justify-center">
       <button
         onClick={toggleTheme}
         className="relative w-16 h-8 bg-gradient-to-r from-blue-200 dark:from-black to-pink-200 dark:to-purple-900 rounded-full border border-white shadow-lg cursor-pointer dark:bg-gray-700 transition-all"
       >
-        {/* Sun */}
         <div
           className={`absolute top-1 left-2 w-4 h-4 bg-yellow-300 border border-gray-700 rounded-full shadow-lg transform transition-all ${theme === "dark" ? "scale-0 translate-x-10" : "scale-100"}`}
         ></div>
-
-        {/* Moon */}
         <div
           className={`absolute top-1 right-2 w-4 h-4 bg-white rounded-full shadow-lg transform transition-all ${theme === "dark" ? "scale-100" : "scale-0 -translate-x-10"}`}
         ></div>
-
-        {/* Clouds */}
         {theme === "light" &&
           Array.from({ length: 2 }).map((_, i) => (
             <div
@@ -49,8 +42,6 @@ export function ModeToggle() {
               }}
             ></div>
           ))}
-
-        {/* Stars */}
         {theme === "dark" &&
           Array.from({ length: 5 }).map((_, i) => (
             <div

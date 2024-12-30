@@ -1,91 +1,31 @@
-"use client";
-import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, MessageSquare, ImageIcon, Download, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import { useState, useEffect } from "react";
 import { Stars } from "lucide-react";
 import SparklesText from "./ui/sparkles-text";
+import TypingEffect from "./TypingEffect";
+import { MotionDiv } from "./MotionDiv";
 
 export default function Landing() {
-  const [plotInput, setPlotInput] = useState("");
-  const [hasMounted, setHasMounted] = useState(false); 
-
-  const lines = [
-    "Once upon a time in a galaxy far, far away...",
-    "A young hero embarks on a journey of self-discovery.",
-    "Villains lurk in the shadows, plotting their schemes.",
-    "Friendship and courage light the way in the darkness.",
-  ];
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (hasMounted) {
-      let lineCounter = 0;
-      let charIndex = 0;
-      let isTyping = true;
-      let plotText = ""; // to accumulate text
-
-      const typingEffect = setInterval(() => {
-        if (isTyping) {
-          if (charIndex < lines[lineCounter].length) {
-            plotText += lines[lineCounter].charAt(charIndex); // accumulate char
-            setPlotInput(plotText); // update state
-            charIndex++;
-          } else {
-            isTyping = false; // stop typing when the current line is complete
-          }
-        } else {
-          if (charIndex > 0) {
-            plotText = plotText.slice(0, -1); // remove last character
-            setPlotInput(plotText); // update state
-            charIndex--;
-          } else {
-            // Move to the next line
-            lineCounter++;
-            if (lineCounter >= lines.length) {
-              // Reset lineCounter and charIndex to restart the effect
-              lineCounter = 0;
-              charIndex = 0;
-            }
-            isTyping = true; // resume typing
-          }
-        }
-      }, 100);
-
-      return () => clearInterval(typingEffect);
-    }
-  }, [hasMounted]);
-
-  if (!hasMounted) return null;
-
   return (
     <div className="min-h-screen ">
       <main className="container mx-auto px-4 pb-12 ">
-        <motion.div
+        <MotionDiv
           className="text-center mb-8 pt-12 relative border-b bg-img1 dark:bg-img3 border-purple-500 dark:border-purple-900 rounded-b-full md:p-8 "
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          
           <Stars className="mx-auto w-8 h-8 text-pink-600 mb-6" />
-
           <SparklesText
             text="Bring Your Stories to Life with AI!"
             className="font-['Gilda'] text-4xl md:text-5xl pb-2 font-bold "
             sparklesCount={3}
           />
-
-          
           <p className="text-lg text-purple-950 dark:text-purple-200 max-w-2xl mx-auto mb-8 italic font-sans">
             Type your movie plot, and let AI craft scenes with dialogues and visuals in seconds.
           </p>
-          <motion.div
+          <MotionDiv
             className="max-w-3xl mx-auto bg-white dark:bg-gray-900 rounded-md shadow-lg overflow-hidden mb-12 relative"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -93,12 +33,7 @@ export default function Landing() {
           >
             <div className="p-6">
               <form>
-                <Textarea
-                  value={plotInput}
-                  onChange={(e) => setPlotInput(e.target.value)}
-                  placeholder="Once upon a time in a galaxy far, far away..."
-                  className="mb-4 h-48 resize-none border-purple-300 relative focus:border-pink-500 focus:ring-pink-500 dark:bg-gray-950 dark:border-purple-600 dark:text-white dark:placeholder-gray-400"
-                />
+                <TypingEffect/>
                 <Button
                   type="submit"
                   className="w-full bg-purple-600 hover:bg-purple-700 text-white text-lg dark:bg-purple-700 dark:hover:bg-purple-800"
@@ -108,16 +43,15 @@ export default function Landing() {
                 </Button>
               </form>
             </div>
-          </motion.div>
-        </motion.div>
+          </MotionDiv>
+        </MotionDiv>
 
-        <motion.div
+        <MotionDiv
           className="mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          {/* <h2 className="text-3xl font-semibold text-center text-purple-800 dark:text-pink-200 mb-8 font-['Gilda']">How It Works</h2> */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[{ icon: Sparkles, title: "AI Analysis", description: "Our advanced AI analyzes your plot and breaks it down into key scenes." },
               { icon: MessageSquare, title: "Dialogue Generation", description: "Engaging and context-aware dialogue is crafted for each scene." },
@@ -131,9 +65,8 @@ export default function Landing() {
               </div>
             ))}
           </div>
-        </motion.div>
-
-        <motion.div
+        </MotionDiv>
+        <MotionDiv
           className="mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -169,9 +102,8 @@ export default function Landing() {
               </div>
             </div>
           </div>
-        </motion.div>
-
-        <motion.div
+        </MotionDiv>
+        <MotionDiv
           className="mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -192,8 +124,7 @@ export default function Landing() {
               </div>
             ))}
           </div>
-        </motion.div>
-
+        </MotionDiv>
         <div className="text-center">
           <Button size="lg" className="bg-pink-500 border border-gray-700 hover:bg-purple-600 text-white text-md dark:bg-pink-700 dark:hover:bg-purple-700 dark:border-gray-600">
             Start Your Cinematic Journey
