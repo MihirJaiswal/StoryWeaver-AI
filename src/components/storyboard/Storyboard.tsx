@@ -70,7 +70,7 @@ Image URL: ${scene.imageUrl}
               value={plot}
               onChange={(e) => setPlot(e.target.value)}
               placeholder="Once upon a time in a galaxy far, far away..."
-              className="min-h-96 md:min-h-[200px] text-lg dark:bg-gray-700 dark:text-gray-100"
+              className="min-h-96 md:min-h-[200px] text-lg dark:bg-black dark:text-gray-100"
               disabled={isLoading}
             />
           </div>
