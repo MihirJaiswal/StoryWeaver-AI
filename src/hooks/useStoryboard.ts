@@ -31,13 +31,17 @@ export function useStoryboard(): StoryboardHook {
       }
 
       if (!response.ok) {
-        throw new Error(`Image generation failed: ${response.status}`);
+        const errorMessage = `Image generation failed: ${response.status}`;
+        setError(errorMessage);
+        throw new Error(errorMessage);
       }
 
       const blob = await response.blob();
       return URL.createObjectURL(blob);
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
       console.error("Image generation error:", error);
+      setError(errorMessage);
       throw error;
     }
   };
@@ -56,6 +60,8 @@ export function useStoryboard(): StoryboardHook {
         i === index ? { ...scene, imageUrl, imageStatus: 'success' } : scene
       ));
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "An error occurred while retrying the image";
+      setError(errorMessage);
       setScenes(prev => prev.map((scene, i) => 
         i === index ? { ...scene, imageStatus: 'error' } : scene
       ));
@@ -95,6 +101,8 @@ export function useStoryboard(): StoryboardHook {
         ));
         await delay(1000);
       } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "An error occurred while retrying the image";
+        setError(errorMessage);
         setScenes(prev => prev.map((scene, index) => 
           index === i ? { ...scene, imageStatus: 'error' } : scene
         ));
